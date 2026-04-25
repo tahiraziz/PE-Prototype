@@ -1,0 +1,10 @@
+{
+  "name": "fullstack-pe-integration",
+  "private": true,
+  "description": "PE Rule-Out fullstack app - run frontend or backend from root",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  }
+}

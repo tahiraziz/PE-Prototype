@@ -1,0 +1,70 @@
+# Epic FHIR Configuration
+# Copy this file to .env and configure as needed.
+
+# =============================================================================
+# ENVIRONMENT SELECTION (Required)
+# =============================================================================
+# Choose which Epic environment to use:
+#   sandbox = Epic's public test sandbox (fhir.epic.com) - for development
+#   prod    = Production Epic instance - for real deployments
+EPIC_ENV=sandbox
+
+# =============================================================================
+# CLIENT IDS (Auto-selected based on EPIC_ENV)
+# =============================================================================
+# These are the registered Epic app client IDs.
+# The correct one is automatically selected based on EPIC_ENV above.
+# You can override by uncommenting and setting EPIC_CLIENT_ID directly.
+
+# Non-production (sandbox) client ID - used when EPIC_ENV=sandbox
+EPIC_CLIENT_ID_SANDBOX=3030ba26-36d2-4af2-866c-ce0101280315
+
+# Production client ID - used when EPIC_ENV=prod
+EPIC_CLIENT_ID_PROD=8eb380b5-deda-47aa-8f8b-6aac19d1b705
+
+# (Optional) Override: Set this to force a specific client ID regardless of EPIC_ENV
+# EPIC_CLIENT_ID=your_custom_client_id_here
+
+# Client secret (if your app requires one - most public apps don't)
+EPIC_CLIENT_SECRET=
+
+# =============================================================================
+# EPIC OAUTH URLs
+# =============================================================================
+# Redirect URI - must match EXACTLY what's registered in your Epic app
+# For sandbox testing, use HTTP (not HTTPS): http://localhost:8000/callback
+# This value is used as-is (no auto-upgrade to https)
+EPIC_REDIRECT_URI=http://localhost:8000/callback
+
+# Authorization and token endpoints (Epic sandbox defaults)
+EPIC_AUTH_URL=https://fhir.epic.com/interconnect-fhir-oauth/oauth2/authorize
+EPIC_TOKEN_URL=https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token
+
+# FHIR server base URL
+FHIR_BASE_URL=https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4
+
+# =============================================================================
+# SCOPE MODE
+# =============================================================================
+# Controls which OAuth scopes are requested:
+#   user    = "openid fhirUser user/Patient.read user/Observation.read"
+#             For clinician apps. Works with Audience=Clinicians in Epic app.
+#             Requires selecting a patient ID manually after login.
+#   patient = "openid fhirUser patient/Patient.read patient/Observation.read launch/patient"
+#             For patient-facing apps. Requires Audience=Patients in Epic app.
+#
+# Default: user (for clinician workflow, avoids 403 on Patient.read)
+EPIC_SCOPE_MODE=user
+
+# =============================================================================
+# APPLICATION SETTINGS
+# =============================================================================
+# Frontend URL (for OAuth redirect after login)
+FRONTEND_URL=http://localhost:3000
+
+# Logging level
+LOG_LEVEL=INFO
+
+# Legacy: SANDBOX_MODE is still supported for backwards compatibility
+# If EPIC_ENV is not set, SANDBOX_MODE=true will use sandbox client ID
+# SANDBOX_MODE=true

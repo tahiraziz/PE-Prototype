@@ -1,0 +1,187 @@
+{
+  "sections": [
+    {
+      "id": "pre-chart",
+      "label": "Pre-Chart",
+      "cases": [
+        {
+          "id": "pre-chart-default",
+          "label": "Default",
+          "card": {
+            "severity": "info",
+            "title": "Patient is ESI 1 with shortness of breath and recent long-haul flight. If PE is in your differential use linked PE workup to see consolidated patient data.",
+            "detail": "PE workup consolidates relevant patient chart data such as previous diagnoses, hemodynamic stress, and patient CTPA safety risks.",
+            "suggestion": "",
+            "link": "Open PE Workup"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ctpa-wo-ddimer",
+      "label": "CTPA W/O D-Dimer",
+      "cases": [
+        {
+          "id": "ctpa-default",
+          "label": "Default case",
+          "card": {
+            "severity": "info",
+            "title": "Before CTPA, check Wells score - 4/7 criteria are pre-filled. D-Dimer recommended if not high risk.",
+            "detail": "",
+            "suggestion": "",
+            "link": "Finish Wells calculation"
+          }
+        },
+        {
+          "id": "ctpa-perc-positive",
+          "label": "PERC positive (>0 checked) auto calculated",
+          "card": {
+            "severity": "info",
+            "title": "Before CTPA, check Wells score - 4/7 criteria are pre-filled. D-Dimer recommended if not high risk.",
+            "detail": "",
+            "suggestion": "",
+            "link": "Finish Wells calculation"
+          }
+        },
+        {
+          "id": "ctpa-perc-negative",
+          "label": "PERC negative so far → app → [PERC or Wells?] + MDM",
+          "card": {
+            "severity": "info",
+            "title": "Before CTPA, check Wells score - 4/7 criteria are pre-filled. D-Dimer recommended if not high risk.",
+            "detail": "",
+            "suggestion": "",
+            "link": "Finish Wells calculation"
+          }
+        },
+        {
+          "id": "ctpa-wells-4",
+          "label": "Wells auto-calculated hitting 4 → D-dimer recommended",
+          "card": {
+            "severity": "info",
+            "title": "Before CTPA, check Wells score - 4/7 criteria are pre-filled. D-Dimer recommended if not high risk.",
+            "detail": "",
+            "suggestion": "",
+            "link": "Finish Wells calculation"
+          }
+        },
+        {
+          "id": "ctpa-imaging-risks",
+          "label": "Yes imaging risks (eGFR, Allergy to Contrast, N radiation)",
+          "card": {
+            "severity": "warning",
+            "title": "Patient has low eGFR and contrast allergy. Before CTPA, check Wells score. D-Dimer recommended if not high risk.",
+            "detail": "Imaging Risks:\n- eGFR 30 - Decreased kidney function\n- Patient has contrast allergy",
+            "suggestion": "",
+            "link": "Finish Wells calculation (4/7 criteria are pre-filled)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "d-dimer",
+      "label": "D-Dimer",
+      "cases": [
+        {
+          "id": "ddimer-no-input",
+          "label": "Didn't input questions in app",
+          "card": {
+            "severity": "info",
+            "title": "D-Dimer is 760 ng/mL. Use YEARS to assess PE rule-out before ordering CTPA.",
+            "detail": "",
+            "suggestion": "",
+            "link": "Calculate YEARS"
+          }
+        },
+        {
+          "id": "ddimer-input-ruled-out",
+          "label": "Did input questions → PE can be ruled out",
+          "card": {
+            "severity": "info",
+            "title": "D-Dimer is 760 ng/mL. PE can be ruled out - under YEARS threshold of 1000 with no YEARS clinical factors present. No further workup needed.",
+            "detail": "YEARS criteria \n(N) Clinical signs of DVT\n(N) Hemoptysis\n(N) PE #1 likely diagnosis",
+            "suggestion": "",
+            "link": ""
+          }
+        },
+        {
+          "id": "ddimer-input-not-ruled-out",
+          "label": "Did input questions → PE can't be ruled out",
+          "card": {
+            "severity": "info",
+            "title": "D-Dimer is 760 ng/mL. CTPA recommended since it exceeds YEARS threshold of 500 when ≥ 1 clinical factors are present. ",
+            "detail": "YEARS criteria \n (Y) Clinical signs of DVT\n(N) Hemoptysis\n(N) PE #1 likely diagnosis",
+            "suggestion": "Order CTPA",
+            "link": ""
+          }
+        },
+        {
+          "id": "ddimer-over-1000",
+          "label": "D-dimer > 1000",
+          "card": {
+            "severity": "info",
+            "title": "D-Dimer is 1140 ng/mL. CTPA recommended.",
+            "detail": "",
+            "suggestion": "Order CTPA",
+            "link": ""
+          }
+        },
+        {
+          "id": "ddimer-under-1000-over-age-adj",
+          "label": "D-dimer < 1000 but over age adjusted threshold (hospital specific)",
+          "card": {
+            "severity": "info",
+            "title": "D-dimer is 760 ng/mL but over age-adjusted threshold of 660. CTPA recommended.",
+            "detail": "",
+            "suggestion": "Order CTPA",
+            "link": ""
+          }
+        },
+        {
+          "id": "ddimer-over-500-under-age-adj",
+          "label": "D-dimer > 500 but under age adjusted threshold (hospital specific)",
+          "card": {
+            "severity": "info",
+            "title": "D-dimer is 600 ng/mL but under age-adjusted threshold of 550. No further workup needed. CTPA not recommended. ",
+            "detail": "",
+            "suggestion": "",
+            "link": ""
+          }
+        },
+        {
+          "id": "ddimer-under-500",
+          "label": "D-dimer < 500",
+          "card": {
+            "severity": "info",
+            "title": "D-Dimer is 430 ng/mL. No further workup needed. CTPA not recommended. ",
+            "detail": "",
+            "suggestion": "",
+            "link": ""
+          }
+        },
+        {
+          "id": "b3383kct",
+          "label": "Imaging Risk + no prior input",
+          "card": {
+            "severity": "warning",
+            "title": "D-Dimer 760 ng/mL + low eGFR. Before CTPA, check YEARS to assess PE rule-out.",
+            "detail": "",
+            "suggestion": "",
+            "link": "Calculate YEARS"
+          }
+        },
+        {
+          "id": "9g9f8krg",
+          "label": "(hmmm) Imaging Risk + prior input -> not ruled out",
+          "card": {
+            "severity": "info",
+            "title": "D-Dimer 760 ng/mL + low eGFR. Before CTPA, determine patient contrast risk level. ",
+            "detail": "",
+            "suggestion": "",
+            "link": ""
+          }
+        }
+      ]
+    }
+  ]
+}

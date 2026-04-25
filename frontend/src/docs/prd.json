@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "productName": "PE Rule-Out SMART on FHIR Integration",
+    "preparer": "Tahir Aziz",
+    "dateCreated": "2026-03-04",
+    "lastUpdated": "2026-03-05",
+    "version": "0.1"
+  },
+  "objective": [
+    "Reduce unnecessary CT-PA ordering by giving ED clinicians a SMART on FHIR-integrated clinical decision support tool that surfaces PE rule-out risk assessments directly within the clinician's EHR workflow."
+  ],
+  "userPersonas": [
+    "Emergency Department Physician – primary decision-maker, needs fast actionable summaries during high-volume shifts.",
+    "(Future) Clinical Informaticist – configures thresholds and rule sets, needs editable documentation and audit trails."
+  ],
+  "successMetrics": [
+    "≥ 80% of ED physicians rate the tool as helpful in pilot survey",
+    "Reduction in CT-PA orders for PERC-negative patients, Wells PE unlikely patients, and YEARS rule out patients",
+    "SMART launch succeeds in Epic sandbox 100% of the time",
+    "Model inference latency < 500 ms p95",
+    "Zero PHI stored beyond the session lifetime"
+  ],
+  "keyFeatures": [
+    "SMART on FHIR OAuth 2.0 launch from Epic EHR context.",
+    "PERC, Wells, and YEARS score calculation from FHIR data and/or clinical input",
+    "Clinical snapshot: vitals, D-dimer, prior imaging, and hemodynamics.",
+    "Editable clinical thresholds with audit trail.",
+    "Pre-chart review dashboard for patients"
+  ],
+  "userStories": [
+    "As an ED physician, I want to see a PE risk score when I open a patient chart, so that I can quickly decide whether to order a CT-PA.",
+    "As a clinician, I want to see which labs and vitals drove the score, so that I can trust and explain the recommendation.",
+    "As a clinical informaticist, I want to edit risk thresholds in-app, so that I can tune the tool without a code deployment.",
+    "As an ED physician reviewing multiple patients, I want a pre-chart dashboard, so that I can triage by risk before entering each chart."
+  ],
+  "uxAndDesign": [
+    "Don't overuse alert colors to avoid alert fatigue",
+    "Avoid interruptive popups whenever possible to avoid alert fatigue",
+    "Mobile-responsive layout in case of tablet use at the bedside.",
+    "(outstanding) - what are launch options for FHIR app? Side panel view for modals, and popup for piechart? Need to check if any restrictions from health system. \n",
+    "(outstanding) - override reasons within CDS cards - should we use those? What are override reasons if so? Does that help/hurt physicians, patients, hospital? "
+  ],
+  "inScope": [
+    "SMART on FHIR OAuth launch and token refresh.",
+    "PERC, Wells, YEARS score computation.",
+    "Clinical snapshot UI (vitals, labs, imaging)."
+  ],
+  "outOfScope": [
+    "Production EHR deployment (Epic production environment).",
+    "PHI storage or persistence beyond in-memory session.",
+    "Integration with non-Epic EHR systems.",
+    "Mobile native app (iOS / Android).",
+    "Billing or coding workflow integration."
+  ],
+  "technicalRequirements": [
+    "Frontend: React + TypeScript, Vite build, Tailwind / inline styles.",
+    "Backend: Python FastAPI, served over HTTPS in production.",
+    "FHIR R4 compliance for all resource queries.",
+    "SMART on FHIR v2 (authorization_code with PKCE).",
+    "Model: scikit-learn pipeline serialized with joblib.",
+    "All secrets via environment variables, never committed."
+  ],
+  "dependencies": [
+    "Epic FHIR sandbox credentials and app registration.",
+    "FHIR R4 sandbox patient data for testing.",
+    "Institutional compliance review before any patient data use.",
+    "Pilot health system IT buy in and clarity on where CDS cards will be placed and options for SMART on FHIR app launch"
+  ],
+  "timeline": [
+    "Week 1–2: SMART launch + OAuth flow working in sandbox.",
+    "Week 3–4: FHIR data mapping and score calculations.",
+    "Week 5–6: Clinical snapshot UI and decision card.",
+    "Week 7: Pre-chart review dashboard.",
+    "Week 8: Editable docs, polish, internal pilot."
+  ],
+  "openQuestions": [
+    "What are our options for where the app can launch in the EPIC UI? ",
+    "How will we get pilot data to evaluate results?",
+    "How will we get retroactive data to analyze before the pilot? "
+  ],
+  "supportingDocuments": [
+    "Clinical Thresholds doc (see Docs > Clinical Thresholds)",
+    "https://academic.oup.com/pmj/article-abstract/95/1126/420/6984054?redirectedFrom=fulltext&login=false",
+    "https://www.sciencedirect.com/org/science/article/pii/S2561326X22002943",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC3267081/",
+    "https://pubs.rsna.org/doi/10.1148/radiol.2016151985"
+  ],
+  "decisionLog": [
+    {
+      "id": "d1",
+      "decision": "Use SMART on FHIR with CDS cards over BPAs",
+      "rationale": "Reduces a dependency on health system for BPA setup",
+      "madeBy": "Tahir",
+      "date": "2026-03-05"
+    }
+  ]
+}

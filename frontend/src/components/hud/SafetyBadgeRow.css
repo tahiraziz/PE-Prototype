@@ -1,0 +1,230 @@
+/* ===========================================================================
+   Safety Badge Row - Zone B (Top Right)
+   HUD-style pill badges for critical safety signals
+   =========================================================================== */
+
+.safety-badge-row {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 200px;
+}
+
+.safety-badge-row.compact {
+  padding: 12px;
+  min-height: auto;
+}
+
+/* Alert Count / All Clear */
+.alert-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 10px;
+  align-self: flex-start;
+}
+
+.count-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f87171;
+}
+
+.count-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fca5a5;
+}
+
+.all-clear {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 10px;
+  align-self: flex-start;
+}
+
+.clear-icon {
+  font-size: 1.2rem;
+  color: #4ade80;
+}
+
+.clear-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #4ade80;
+}
+
+/* Badges Container */
+.badges-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Individual Badge */
+.safety-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  min-width: 140px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.safety-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Badge Colors */
+.badge-green {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.badge-yellow {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.badge-gray {
+  background: rgba(107, 114, 128, 0.15);
+  border-color: rgba(107, 114, 128, 0.4);
+}
+
+/* Badge Icon */
+.badge-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-green .badge-icon { color: #4ade80; }
+.badge-yellow .badge-icon { color: #fbbf24; }
+.badge-red .badge-icon { color: #f87171; }
+.badge-gray .badge-icon { color: #9ca3af; }
+
+/* Badge Content */
+.badge-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.badge-title {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.badge-value {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+/* Badge Status */
+.badge-status {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.status-green {
+  background: rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.status-yellow {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.status-red {
+  background: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.status-gray {
+  background: rgba(107, 114, 128, 0.3);
+  color: #9ca3af;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.1) 25%, 
+    rgba(255,255,255,0.15) 50%, 
+    rgba(255,255,255,0.1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+.skeleton-badge {
+  width: 140px;
+  height: 50px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .badges-container {
+    flex-direction: column;
+  }
+  
+  .safety-badge {
+    min-width: 100%;
+  }
+}
+
+/* Compact Mode */
+.safety-badge-row.compact .badges-container {
+  gap: 8px;
+}
+
+.safety-badge-row.compact .safety-badge {
+  padding: 8px 12px;
+  min-width: 120px;
+}
+
+.safety-badge-row.compact .badge-value {
+  font-size: 0.75rem;
+}

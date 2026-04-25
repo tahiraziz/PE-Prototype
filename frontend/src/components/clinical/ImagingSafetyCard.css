@@ -1,0 +1,292 @@
+/* ===========================================================================
+   Imaging Safety Card Component Styles
+   =========================================================================== */
+
+.imaging-safety-card {
+  background: var(--color-surface, #ffffff);
+  border-radius: 12px;
+  border: 1px solid var(--color-border, #e5e7eb);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.imaging-safety-card.has-duplicate-risk {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+.imaging-safety-card.loading {
+  min-height: 180px;
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+  margin: 0;
+}
+
+.title-icon {
+  font-size: 16px;
+}
+
+.duplicate-alert {
+  font-size: 10px;
+  font-weight: 700;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Card Content */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 12px;
+  padding: 8px;
+  background: #fee2e2;
+  border-radius: 6px;
+}
+
+/* Renal Badge */
+.renal-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.renal-badge.risk-safe {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.renal-badge.risk-caution {
+  background: #fef3c7;
+  border-color: #fcd34d;
+  color: #a16207;
+}
+
+.renal-badge.risk-high {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.renal-badge.risk-unknown {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #6b7280;
+}
+
+.badge-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-icon {
+  font-size: 14px;
+}
+
+.badge-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge-detail {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.badge-values {
+  display: flex;
+  gap: 12px;
+  font-size: 10px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Imaging History */
+.imaging-history-empty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.empty-icon {
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.imaging-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.header-icon {
+  font-size: 14px;
+}
+
+.duplicate-warning {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.history-records {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-record {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: #f9fafb;
+  border-radius: 6px;
+  border-left: 3px solid #d1d5db;
+  font-size: 11px;
+}
+
+.history-record.record-recent {
+  background: #fef3c7;
+  border-left-color: #f59e0b;
+}
+
+.record-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.record-modality {
+  font-weight: 600;
+  color: var(--color-text, #111827);
+  background: #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.record-modality.modality-cta {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.record-date {
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 10px;
+}
+
+.record-result {
+  color: var(--color-text-secondary, #374151);
+  line-height: 1.4;
+}
+
+.record-flag {
+  font-size: 10px;
+  font-weight: 600;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.history-more {
+  font-size: 10px;
+  color: #6b7280;
+  text-align: center;
+  padding: 4px;
+}
+
+/* Skeleton Loading */
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+.skeleton-badge {
+  height: 72px;
+}
+
+.skeleton-list {
+  height: 100px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .imaging-safety-card {
+    padding: 12px;
+  }
+  
+  .badge-values {
+    flex-direction: column;
+    gap: 2px;
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "lastUpdated": "2026-03-04",
+  "vitalStability": {
+    "vitals": [
+      { "id": "v1", "vital": "HR",       "unit": "bpm",  "condition": "hr > 100",  "alertLabel": "TACHYCARDIA", "alertColor": "#991B1B" },
+      { "id": "v2", "vital": "BP (SBP)", "unit": "mmHg", "condition": "sbp < 90",  "alertLabel": "HYPOTENSION", "alertColor": "#991B1B" },
+      { "id": "v3", "vital": "SPO2",     "unit": "%",    "condition": "spo2 < 95", "alertLabel": "HYPOXIA",     "alertColor": "#991B1B" },
+      { "id": "v4", "vital": "RR",       "unit": "/min", "condition": "rr > 20",   "alertLabel": "TACHYPNEA",   "alertColor": "#991B1B" },
+      { "id": "v5", "vital": "TEMP",     "unit": "°C",   "condition": "temp > 38", "alertLabel": "FEBRILE",     "alertColor": "#991B1B" }
+    ],
+    "notes": [
+      "There is no low-HR (bradycardia) alert — only hr > 100 triggers a state change.",
+      "SPO2 also shows the O2 delivery device in brackets (e.g. [RA] for room air, [NRB] for non-rebreather). This is display-only and does not affect the alert threshold."
+    ]
+  },
+  "hemodynamicStress": {
+    "mapFormula": "(SBP + 2 × DBP) / 3",
+    "mapColor": "#111827",
+    "shockIndexFormula": "HR / SBP",
+    "shockStates": [
+      { "id": "s1", "condition": "≤ 0.7",            "status": "Safe",    "valueColor": "#111827", "labelText": "",             "labelColor": ""        },
+      { "id": "s2", "condition": "> 0.7 and ≤ 0.9", "status": "Caution", "valueColor": "#111827", "labelText": "> 0.7 Caution","labelColor": "#D97706" },
+      { "id": "s3", "condition": "> 0.9",            "status": "Danger",  "valueColor": "#111827", "labelText": "> 0.9 Risk",   "labelColor": "#991B1B" }
+    ]
+  },
+  "previousDiagnoses": {
+    "items": [
+      { "id": "d1", "activeLabel": "Prior PE Diagnosis",        "inactiveLabel": "No prior PE diagnosis",           "activeSubtext": "Date from patient.priorPEDate (e.g. \"03/12/2021\") · omitted if no date", "detectionCondition": "patient.hasPriorVTE === true" },
+      { "id": "d2", "activeLabel": "Cancer (last 6 months)",   "inactiveLabel": "No cancer in the last 6 months",  "activeSubtext": "",                                                                       "detectionCondition": "Regex /cancer|malignancy|chemotherapy|tumor/i matches any entry in patient.activeProblems" },
+      { "id": "d3", "activeLabel": "Surgeries (last 4 weeks)", "inactiveLabel": "No surgeries in the last 4 weeks","activeSubtext": "",                                                                       "detectionCondition": "patient.hasRecentSurgery === true" },
+      { "id": "d4", "activeLabel": "Immobilizations (last 3 days)", "inactiveLabel": "No immobilizations in the last 3 days", "activeSubtext": "\"{date} · {description}\"",                              "detectionCondition": "patient.recentImmobilization is not null / undefined" },
+      { "id": "d5", "activeLabel": "Prior Thrombophilia",       "inactiveLabel": "No prior Thrombophilia",          "activeSubtext": "",                                                                       "detectionCondition": "patient.priorThrombophilia === true (undefined treated as false)" },
+      { "id": "d6", "activeLabel": "Currently pregnant",        "inactiveLabel": "Not currently pregnant",          "activeSubtext": "",                                                                       "detectionCondition": "Regex /pregnancy|pregnant|gestational/i matches any entry in patient.activeProblems" },
+      { "id": "d7", "activeLabel": "Currently on Estrogen",     "inactiveLabel": "Not currently on Estrogen",       "activeSubtext": "",                                                                       "detectionCondition": "patient.usesEstrogen === true" }
+    ]
+  },
+  "priorCtpas": {
+    "badgeStates": [
+      { "id": "pc1", "condition": "Positive",      "badgeLabel": "Positive",      "textColor": "#991B1B", "background": "#FFF5F3" },
+      { "id": "pc2", "condition": "Negative",      "badgeLabel": "Negative",      "textColor": "#166534", "background": "#F0FDF4" },
+      { "id": "pc3", "condition": "Indeterminate", "badgeLabel": "Indeterminate", "textColor": "#D97706", "background": "#FEF6F0" }
+    ],
+    "notes": [
+      "Date is prefixed: \"CTPA on {Month Day, Year}\" — listStyle (14px regular #111827).",
+      "Report summary appears below the date row — labelStyle (14px regular #596887).",
+      "If no prior imaging on file: \"None on file\" in labelStyle."
+    ]
+  },
+  "ctpaSafety": {
+    "egfr": {
+      "badgeStates": [
+        { "id": "e1", "condition": "≥ 60",           "badgeLabel": "Safe",     "textColor": "#166534", "background": "#F0FDF4" },
+        { "id": "e2", "condition": "≥ 30 and < 60",  "badgeLabel": "Caution",  "textColor": "#D97706", "background": "#FEF6F0" },
+        { "id": "e3", "condition": "< 30",            "badgeLabel": "Impaired", "textColor": "#991B1B", "background": "#FFF5F3" }
+      ],
+      "descriptions": [
+        { "id": "ed1", "range": "≥ 90",    "description": "Normal kidney function"    },
+        { "id": "ed2", "range": "60 – 89", "description": "Mildly decreased function" },
+        { "id": "ed3", "range": "45 – 59", "description": "Mild-moderate decrease"    },
+        { "id": "ed4", "range": "30 – 44", "description": "Moderate-severe decrease"  },
+        { "id": "ed5", "range": "15 – 29", "description": "Severely decreased"        },
+        { "id": "ed6", "range": "< 15",    "description": "Kidney failure"            }
+      ]
+    },
+    "contrastAllergy": {
+      "badgeStates": [
+        { "id": "ca1", "condition": "true",  "badgeLabel": "ALLERGY", "textColor": "#991B1B", "background": "#FFF5F3" },
+        { "id": "ca2", "condition": "false", "badgeLabel": "None",    "textColor": "#166534", "background": "#F0FDF4" }
+      ],
+      "descriptions": [
+        { "id": "cad1", "value": "true",  "description": "Allergy documented" },
+        { "id": "cad2", "value": "false", "description": "No known allergy"   }
+      ]
+    },
+    "radiation": {
+      "badgeStates": [
+        { "id": "r1", "condition": "> 100",          "badgeLabel": "Unsafe",  "textColor": "#991B1B", "background": "#FFF5F3" },
+        { "id": "r2", "condition": "> 50 and ≤ 100", "badgeLabel": "Caution", "textColor": "#D97706", "background": "#FEF6F0" },
+        { "id": "r3", "condition": "≤ 50",           "badgeLabel": "Safe",    "textColor": "#166534", "background": "#F0FDF4" }
+      ]
+    }
+  },
+  "years": {
+    "factors": [
+      "Clinical DVT?",
+      "Hemoptysis?",
+      "PE is most likely diagnosis?"
+    ],
+    "thresholds": [
+      { "id": "yt1", "score": "0",   "threshold": "1000 ng/mL" },
+      { "id": "yt2", "score": "≥ 1", "threshold": "500 ng/mL"  }
+    ],
+    "results": [
+      { "id": "yr1", "condition": "dDimer < threshold", "result": "rule-out",    "background": "#F0FDF4", "textColor": "#166534", "icon": "✓ CheckCircle"   },
+      { "id": "yr2", "condition": "dDimer ≥ threshold", "result": "no-rule-out", "background": "#FFF5F3", "textColor": "#991B1B", "icon": "⚠ AlertTriangle" }
+    ],
+    "barChartNotes": [
+      "Bar fill is #166534 when dDimer < threshold, #991B1B when dDimer ≥ threshold.",
+      "A vertical threshold tick is always shown at the threshold position.",
+      "Units displayed in the modal are ng/mL."
+    ]
+  }
+}

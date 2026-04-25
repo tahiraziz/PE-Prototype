@@ -1,0 +1,66 @@
+/* ============================================================================
+   HUD Mode Overrides for Luminur PE Dashboard
+   ============================================================================ */
+
+/* Connection Banner */
+.connection-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.banner-icon {
+  font-size: 1.1rem;
+}
+
+.banner-text {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #92400e;
+}
+
+.connection-banner .retry-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #f59e0b;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.connection-banner .retry-btn:hover {
+  background: #d97706;
+}
+
+/* Main container dark mode for HUD */
+.app .main {
+  background: #0a0a0f;
+  min-height: calc(100vh - 100px);
+  padding: 0;
+}
+
+/* Reduce top bar prominence in HUD mode */
+.top-bar {
+  background: #0f172a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Demo selector dark mode */
+.demo-mode-selector {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Auth indicator subtle in HUD mode */
+.auth-indicator {
+  background: rgba(255, 255, 255, 0.05);
+}

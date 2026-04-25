@@ -1,0 +1,129 @@
+/* ===========================================================================
+   Decision Card Component - Enhanced with Decision Anchors
+   =========================================================================== */
+
+/* Decision Anchors Row */
+.decision-anchors {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 12px 0;
+  padding: 10px 0;
+  border-top: 1px dashed var(--color-border, #e5e7eb);
+  border-bottom: 1px dashed var(--color-border, #e5e7eb);
+}
+
+/* Anchor Pills */
+.anchor-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 16px;
+  font-size: 11px;
+  border: 1px solid transparent;
+}
+
+.anchor-label {
+  font-weight: 500;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.anchor-value {
+  font-weight: 700;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.anchor-threshold {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.anchor-risk {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Wells Score States */
+.wells-anchor.risk-low {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.wells-anchor.risk-moderate {
+  background: #fef3c7;
+  color: #a16207;
+  border-color: #fcd34d;
+}
+
+.wells-anchor.risk-high {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+/* PERC States */
+.perc-anchor.perc-negative {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.perc-anchor.perc-positive {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+/* D-Dimer States */
+.ddimer-anchor.ddimer-normal {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.ddimer-anchor.ddimer-elevated {
+  background: #fef3c7;
+  color: #a16207;
+  border-color: #fcd34d;
+}
+
+.ddimer-anchor.ddimer-unknown {
+  background: #f3f4f6;
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+/* Age-Adjusted Indicator */
+.ddimer-anchor .anchor-label {
+  font-size: 10px;
+}
+
+/* Threshold Display */
+.anchor-threshold {
+  font-size: 10px;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .decision-anchors {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .anchor-pill {
+    justify-content: space-between;
+    border-radius: 6px;
+  }
+}

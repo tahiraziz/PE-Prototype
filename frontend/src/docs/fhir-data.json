@@ -1,0 +1,319 @@
+{
+  "meta": {
+    "fhirVersion": "R4",
+    "ehrTarget": "Epic",
+    "date": "March 2026",
+    "lastUpdated": "2026-03-04"
+  },
+  "sections": [
+    {
+      "id": "vital-signs",
+      "title": "Section 1: Vital Signs",
+      "subtitle": "All use Observation resource with category=vital-signs.",
+      "fields": [
+        {
+          "id": "heart-rate",
+          "name": "Heart Rate (HR)",
+          "rows": [
+            { "property": "Display", "value": "102 bpm — TACHYCARDIA" },
+            { "property": "FHIR Resource", "value": "Observation" },
+            { "property": "LOINC", "value": "8867-4" },
+            { "property": "Value path", "value": "valueQuantity.value" },
+            { "property": "Unit (UCUM)", "value": "/min" },
+            { "property": "Prefetch query", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|8867-4&category=vital-signs&_sort=-date&_count=1" },
+            { "property": "TACHYCARDIA label", "value": "Applied by CDS service: value > 100" },
+            { "property": "Example JSON", "value": "\"valueQuantity\": { \"value\": 102, \"unit\": \"beats/min\", \"system\": \"http://unitsofmeasure.org\", \"code\": \"/min\" }" },
+            { "property": "Notes", "value": "Interpretation flag (\"H\") may not always be populated in Epic — apply threshold in your service rather than relying on the flag." }
+          ]
+        },
+        {
+          "id": "blood-pressure",
+          "name": "Blood Pressure (BP)",
+          "rows": [
+            { "property": "Display", "value": "128/78 mmHg" },
+            { "property": "FHIR Resource", "value": "Observation (panel with two components)" },
+            { "property": "LOINC — panel", "value": "85354-9" },
+            { "property": "LOINC — systolic component", "value": "8480-6" },
+            { "property": "LOINC — diastolic component", "value": "8462-4" },
+            { "property": "Systolic value path", "value": "component[?(@.code.coding[0].code=='8480-6')].valueQuantity.value" },
+            { "property": "Diastolic value path", "value": "component[?(@.code.coding[0].code=='8462-4')].valueQuantity.value" },
+            { "property": "Unit (UCUM)", "value": "mm[Hg]" },
+            { "property": "Prefetch query", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|85354-9&category=vital-signs&_sort=-date&_count=1" },
+            { "property": "Notes", "value": "Always query by panel code 85354-9. Systolic and diastolic are not independently searchable in Epic FHIR — both live inside the component array of the same resource." }
+          ]
+        },
+        {
+          "id": "spo2",
+          "name": "SpO2",
+          "rows": [
+            { "property": "Display", "value": "93% [2L NC] — HYPOXIA" },
+            { "property": "FHIR Resource", "value": "Observation" },
+            { "property": "LOINC", "value": "59408-5 (pulse oximetry) or 2708-6 (general)" },
+            { "property": "Value path", "value": "valueQuantity.value" },
+            { "property": "Unit (UCUM)", "value": "%" },
+            { "property": "Prefetch query", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|59408-5,http://loinc.org|2708-6&category=vital-signs&_sort=-date&_count=1" },
+            { "property": "HYPOXIA label", "value": "Applied by CDS service: value < 94%" },
+            { "property": "\"2L NC\" context", "value": "⚠️ Not reliably structured in FHIR R4. May appear in note[0].text or a component field depending on Epic version and flowsheet config. Cannot be guaranteed via prefetch." },
+            { "property": "Notes", "value": "Query both LOINC codes — Epic sites vary on which is used." }
+          ]
+        },
+        {
+          "id": "respiratory-rate",
+          "name": "Respiratory Rate (RR)",
+          "rows": [
+            { "property": "Display", "value": "24 /min — TACHYPNEA" },
+            { "property": "FHIR Resource", "value": "Observation" },
+            { "property": "LOINC", "value": "9279-1" },
+            { "property": "Value path", "value": "valueQuantity.value" },
+            { "property": "Unit (UCUM)", "value": "/min" },
+            { "property": "Prefetch query", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|9279-1&category=vital-signs&_sort=-date&_count=1" },
+            { "property": "TACHYPNEA label", "value": "Applied by CDS service: value > 20" },
+            { "property": "Notes", "value": "Reliable across Epic sites." }
+          ]
+        },
+        {
+          "id": "temperature",
+          "name": "Temperature (TEMP)",
+          "rows": [
+            { "property": "Display", "value": "38.6°C — FEBRILE" },
+            { "property": "FHIR Resource", "value": "Observation" },
+            { "property": "LOINC", "value": "8310-5" },
+            { "property": "Value path", "value": "valueQuantity.value" },
+            { "property": "Unit (UCUM)", "value": "Cel" },
+            { "property": "Prefetch query", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|8310-5&category=vital-signs&_sort=-date&_count=1" },
+            { "property": "FEBRILE label", "value": "Applied by CDS service: value > 38.0°C" },
+            { "property": "Notes", "value": "Some Epic sites store in Fahrenheit ([degF]). Check valueQuantity.unit and convert if needed: °C = (°F − 32) × 5/9." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hemodynamic-stress",
+      "title": "Section 2: Hemodynamic Stress (Calculated Values)",
+      "subtitle": "Neither MAP nor Shock Index are stored in Epic as discrete FHIR Observations in standard configurations. Both must be calculated by your CDS service from raw vital sign components.",
+      "fields": [
+        {
+          "id": "map",
+          "name": "MAP (Mean Arterial Pressure)",
+          "rows": [
+            { "property": "Display", "value": "95 mmHg" },
+            { "property": "FHIR Resource", "value": "⚠️ Not stored — calculated" },
+            { "property": "Formula", "value": "(SBP + 2 × DBP) ÷ 3" },
+            { "property": "Source fields", "value": "SBP component 8480-6 + DBP component 8462-4 from BP panel 85354-9" },
+            { "property": "Stored alternative", "value": "LOINC 8478-0 — exists in some ICU flowsheet configs but not reliably available across sites" },
+            { "property": "Notes", "value": "Always fall back to calculating from SBP/DBP. Do not rely on stored MAP being present." }
+          ]
+        },
+        {
+          "id": "shock-index",
+          "name": "Shock Index",
+          "rows": [
+            { "property": "Display", "value": "0.80 — > 0.7 Caution" },
+            { "property": "FHIR Resource", "value": "⚠️ Not stored — calculated" },
+            { "property": "Formula", "value": "HR ÷ SBP" },
+            { "property": "Source fields", "value": "HR from LOINC 8867-4; SBP from BP panel component 8480-6" },
+            { "property": "Caution threshold", "value": "> 0.7 — label applied by CDS service" },
+            { "property": "Critical threshold", "value": "> 1.0" },
+            { "property": "Notes", "value": "Retrieve HR and BP from the same or closest available timestamps. If timestamps differ, note the time delta in your card detail text." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "previous-diagnoses",
+      "title": "Section 3: Previous Diagnoses Checklist",
+      "subtitle": "These fields represent PE risk criteria. Each criterion maps to a different FHIR resource type and query strategy. Your CDS service evaluates each query result and derives a boolean (criteria met) to render the checklist.",
+      "fields": [
+        {
+          "id": "prior-pe",
+          "name": "Prior PE Diagnosis",
+          "rows": [
+            { "property": "Display", "value": "Prior PE Diagnosis — 02/15/2023 (red flag)" },
+            { "property": "FHIR Resource", "value": "Condition" },
+            { "property": "Code system", "value": "ICD-10-CM or SNOMED CT" },
+            { "property": "ICD-10 code", "value": "I26.99 (other pulmonary embolism without acute cor pulmonale) or I26.09 / I26.90 depending on specificity" },
+            { "property": "SNOMED code", "value": "59282003 (Pulmonary embolism)" },
+            { "property": "Prefetch query", "value": "Condition?patient={{context.patientId}}&code=http://hl7.org/fhir/sid/icd-10-cm|I26.99,http://snomed.info/sct|59282003&clinical-status=active,resolved,inactive" },
+            { "property": "Date path", "value": "onsetDateTime or recordedDate" },
+            { "property": "Criterion derivation", "value": "CDS service checks: does any result exist? → if yes, flag as red" },
+            { "property": "Notes", "value": "Query both active and resolved/inactive conditions — a prior PE may be coded as resolved but is still clinically relevant. Include multiple ICD-10 PE codes as Epic sites vary in specificity." }
+          ]
+        },
+        {
+          "id": "immobilization",
+          "name": "Immobilization in the last 3 days",
+          "rows": [
+            { "property": "Display", "value": "Immobilization in the last 3 days — 03/01/2026 · Fall due to broken hip (red flag)" },
+            { "property": "FHIR Resource", "value": "Condition (fracture/injury) + Procedure (surgical immobilization) + Encounter (hospitalization)" },
+            { "property": "ICD-10 — hip fracture", "value": "S72.001A (fracture of femoral neck) or S72.90XA (unspecified fracture of femur)" },
+            { "property": "SNOMED — immobilization", "value": "415510000 (Immobilization)" },
+            { "property": "Prefetch query — conditions", "value": "Condition?patient={{context.patientId}}&onset-date=ge{{today-3d}}&_sort=-onset-date&_count=20" },
+            { "property": "Prefetch query — encounters", "value": "Encounter?patient={{context.patientId}}&date=ge{{today-3d}}&class=IMP,EMER&_sort=-date&_count=5" },
+            { "property": "Criterion derivation", "value": "CDS service checks: any immobilizing condition, surgery, or inpatient stay within last 3 days? Apply date filter on onsetDateTime" },
+            { "property": "Notes", "value": "⚠️ This is the hardest checklist criterion to reliably derive. \"Immobilization\" is not a single discrete code — it encompasses fracture states, prolonged bed rest, and paralysis. Your service needs to evaluate a broad set of relevant codes and apply clinical judgment logic. Consider also querying Procedure for recent surgeries (Procedure?patient={{context.patientId}}&date=ge{{today-28d}})." }
+          ]
+        },
+        {
+          "id": "no-cancer",
+          "name": "No cancer in the last 6 months",
+          "rows": [
+            { "property": "Display", "value": "No cancer in the last 6 months (negative criterion — not flagged)" },
+            { "property": "FHIR Resource", "value": "Condition" },
+            { "property": "ICD-10 range", "value": "C00–C96 (malignant neoplasms)" },
+            { "property": "SNOMED", "value": "363346000 (Malignant neoplastic disease)" },
+            { "property": "Prefetch query", "value": "Condition?patient={{context.patientId}}&category=problem-list-item&clinical-status=active" },
+            { "property": "Criterion derivation", "value": "CDS service checks: any active malignancy code in C00–C96 range? If none found → display as \"No cancer in last 6 months\"" },
+            { "property": "Notes", "value": "Also query onset-date=ge{{today-180d}} for recently resolved cancers. Active problem list is the most reliable source in Epic but may not capture all historical malignancies." }
+          ]
+        },
+        {
+          "id": "no-surgery",
+          "name": "No surgeries in the last 4 weeks",
+          "rows": [
+            { "property": "Display", "value": "No surgeries in the last 4 weeks (negative criterion)" },
+            { "property": "FHIR Resource", "value": "Procedure" },
+            { "property": "SNOMED — surgical procedure", "value": "387713003 (Surgical procedure)" },
+            { "property": "Prefetch query", "value": "Procedure?patient={{context.patientId}}&date=ge{{today-28d}}&_sort=-date&_count=10" },
+            { "property": "Criterion derivation", "value": "CDS service checks: any Procedure with category = surgical within last 28 days? If none → negative criterion" },
+            { "property": "Notes", "value": "Epic populates Procedure from OR documentation. Minor procedures (biopsies, line placements) may or may not be present depending on Epic build. Date filter uses performed element: performedDateTime or performedPeriod.start." }
+          ]
+        },
+        {
+          "id": "no-thrombophilia",
+          "name": "No prior Thrombophilia",
+          "rows": [
+            { "property": "Display", "value": "No prior Thrombophilia (negative criterion)" },
+            { "property": "FHIR Resource", "value": "Condition" },
+            { "property": "ICD-10 codes", "value": "D68.59 (other primary thrombophilia), D68.51 (activated protein C resistance), D68.52 (prothrombin gene mutation), D68.61 (antiphospholipid syndrome)" },
+            { "property": "SNOMED", "value": "234467004 (Thrombophilia)" },
+            { "property": "Prefetch query", "value": "Condition?patient={{context.patientId}}&code=http://hl7.org/fhir/sid/icd-10-cm|D68.59,http://hl7.org/fhir/sid/icd-10-cm|D68.51,http://hl7.org/fhir/sid/icd-10-cm|D68.52&clinical-status=active,inactive,resolved" },
+            { "property": "Criterion derivation", "value": "CDS service checks: any thrombophilia condition found? If none → negative criterion" },
+            { "property": "Notes", "value": "Include resolved/inactive status — thrombophilia is a lifetime diagnosis even when not listed as active." }
+          ]
+        },
+        {
+          "id": "not-pregnant",
+          "name": "Not currently pregnant",
+          "rows": [
+            { "property": "Display", "value": "Not currently pregnant (negative criterion)" },
+            { "property": "FHIR Resource", "value": "Condition or Observation" },
+            { "property": "ICD-10 — pregnancy", "value": "Z34.xx (supervision of normal pregnancy) range" },
+            { "property": "SNOMED", "value": "77386006 (Pregnancy)" },
+            { "property": "LOINC — pregnancy test", "value": "2106-3 (pregnancy status)" },
+            { "property": "Prefetch query — condition", "value": "Condition?patient={{context.patientId}}&code=http://snomed.info/sct|77386006&clinical-status=active" },
+            { "property": "Prefetch query — observation", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|2106-3&_sort=-date&_count=1" },
+            { "property": "Criterion derivation", "value": "CDS service checks: active pregnancy condition OR positive pregnancy test Observation? If neither → not currently pregnant" },
+            { "property": "Notes", "value": "⚠️ Pregnancy status in Epic is often documented in OB-specific flowsheets that may not surface via standard FHIR Observation queries. This criterion has lower reliability than others — consider flagging \"unknown\" rather than \"not pregnant\" if no data is found. Also check patient gender — if male, skip query entirely." }
+          ]
+        },
+        {
+          "id": "not-on-estrogen",
+          "name": "Not currently on estrogen",
+          "rows": [
+            { "property": "Display", "value": "Not currently on estrogen (negative criterion)" },
+            { "property": "FHIR Resource", "value": "MedicationRequest" },
+            { "property": "RxNorm — estrogen class", "value": "Estradiol: 4083; Conjugated estrogens: 3410; Ethinyl estradiol: 4099" },
+            { "property": "NDF-RT drug class", "value": "C0175693 (Estrogens)" },
+            { "property": "Prefetch query", "value": "MedicationRequest?patient={{context.patientId}}&status=active&_count=50" },
+            { "property": "Criterion derivation", "value": "CDS service filters active MedicationRequests for any medication in the estrogen drug class using RxNorm codes or text matching. If none found → not on estrogen" },
+            { "property": "Notes", "value": "Covers oral contraceptives containing ethinyl estradiol, HRT patches, and vaginal estrogen. Text-based matching is a useful fallback given variability in RxNorm coding across Epic sites." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anticoagulants",
+      "title": "Section 4: Anticoagulants",
+      "subtitle": "",
+      "fields": [
+        {
+          "id": "warfarin",
+          "name": "Warfarin",
+          "rows": [
+            { "property": "Display", "value": "Warfarin — 5mg 2x/day (green dot = active)" },
+            { "property": "FHIR Resource", "value": "MedicationRequest" },
+            { "property": "RxNorm code", "value": "11289 (warfarin)" },
+            { "property": "Medication name path", "value": "medicationCodeableConcept.text or medicationCodeableConcept.coding[0].display" },
+            { "property": "Dose path", "value": "dosageInstruction[0].doseAndRate[0].doseQuantity.value" },
+            { "property": "Frequency path", "value": "dosageInstruction[0].timing.repeat.frequency + periodUnit" },
+            { "property": "Status path", "value": "status — value \"active\" maps to green dot" },
+            { "property": "Prefetch query", "value": "MedicationRequest?patient={{context.patientId}}&status=active&code=http://www.nlm.nih.gov/research/umls/rxnorm|11289&_count=5" },
+            { "property": "Notes", "value": "Key anticoagulant RxNorm codes: Warfarin 11289, Apixaban 1364430, Rivaroxaban 1114195, Heparin 5224, Enoxaparin 67108. A green dot indicates status: active; no dot or grey would indicate discontinued." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prior-ctpas",
+      "title": "Section 5: Prior CTPAs",
+      "subtitle": "",
+      "fields": [
+        {
+          "id": "ctpa-result",
+          "name": "Prior CTPA Result",
+          "rows": [
+            { "property": "Display", "value": "Feb 15, 2024 — Negative / \"No pulmonary embolism. Mild atelectasis at lung bases.\"" },
+            { "property": "FHIR Resource", "value": "DiagnosticReport" },
+            { "property": "LOINC — CTPA", "value": "24627-2 (CT chest) or 36643-5 (XR chest, also used for CT in some configs)" },
+            { "property": "Category LOINC", "value": "LP29684-5 (Radiology)" },
+            { "property": "Date path", "value": "effectiveDateTime" },
+            { "property": "Status path", "value": "status — value \"final\"" },
+            { "property": "Conclusion path", "value": "conclusion — free text radiologist impression" },
+            { "property": "Negative/Positive derivation", "value": "CDS service applies keyword logic to conclusion text: presence of \"no pulmonary embolism\" or \"negative for PE\" → Negative label. Alternatively check conclusionCode if structured." },
+            { "property": "Prefetch query", "value": "DiagnosticReport?patient={{context.patientId}}&code=http://loinc.org|24627-2&category=LP29684-5&_sort=-date&_count=5" },
+            { "property": "Notes", "value": "⚠️ The \"Negative\" label is derived from free-text NLP on the conclusion field — there is no standardized structured PE result code in FHIR R4 that Epic reliably populates. Your service must parse the conclusion string. Also query ImagingStudy as a fallback: ImagingStudy?patient={{context.patientId}}&modality=CT&_sort=-started&_count=5." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ctpa-safety",
+      "title": "Section 6: CTPA Safety Barriers",
+      "subtitle": "",
+      "fields": [
+        {
+          "id": "egfr",
+          "name": "eGFR",
+          "rows": [
+            { "property": "Display", "value": "eGFR 78 — Safe / \"Mildly decreased function\"" },
+            { "property": "FHIR Resource", "value": "Observation" },
+            { "property": "LOINC codes", "value": "77147-7 (CKD-EPI, preferred) or 33914-3 (MDRD)" },
+            { "property": "Value path", "value": "valueQuantity.value" },
+            { "property": "Unit (UCUM)", "value": "mL/min/{1.73_m2}" },
+            { "property": "Prefetch query", "value": "Observation?patient={{context.patientId}}&code=http://loinc.org|77147-7,http://loinc.org|33914-3&_sort=-date&_count=1" },
+            { "property": "Safe/Unsafe threshold", "value": "Safe: ≥ 30; Caution: 15–29; Unsafe: < 15 — applied by CDS service" },
+            { "property": "\"Mildly decreased\" label", "value": "CDS service maps value to CKD stage: 60–89 = mildly decreased (Stage G2)" },
+            { "property": "Notes", "value": "Query both LOINC codes — Epic sites vary. eGFR is calculated and stored as a lab result, not a vital sign. Check effectiveDateTime — use result within last 90 days for contrast safety determination." }
+          ]
+        },
+        {
+          "id": "contrast-allergy",
+          "name": "Contrast Allergy",
+          "rows": [
+            { "property": "Display", "value": "Contrast Allergy — None / \"No known allergy\"" },
+            { "property": "FHIR Resource", "value": "AllergyIntolerance" },
+            { "property": "Substance codes — iodinated contrast", "value": "RxNorm 75892 (iohexol), 76093 (ioversol); or SNOMED 385268001 (iodinated contrast media)" },
+            { "property": "Status path", "value": "clinicalStatus.coding[0].code — value \"active\"" },
+            { "property": "Substance path", "value": "code.coding[0].code + code.text" },
+            { "property": "Prefetch query", "value": "AllergyIntolerance?patient={{context.patientId}}&clinical-status=active" },
+            { "property": "None derivation", "value": "CDS service filters results for contrast-related substances. If none match → display \"None\"" },
+            { "property": "Notes", "value": "⚠️ Contrast allergy coding is inconsistent across Epic sites — some use RxNorm, some use local codes, some use free text in code.text. Text matching on \"contrast,\" \"iodine,\" or \"dye\" in code.text is a reliable fallback. Also check reaction[0].manifestation for severity (mild/moderate/severe) to differentiate allergy vs. sensitivity." }
+          ]
+        },
+        {
+          "id": "radiation-exposure",
+          "name": "Total Radiation Exposure",
+          "rows": [
+            { "property": "Display", "value": "120 mSv in the last 4 weeks — Unsafe" },
+            { "property": "FHIR Resource", "value": "ImagingStudy (primary) + DiagnosticReport (secondary)" },
+            { "property": "Dose element path", "value": "ImagingStudy.series[0].instance[0] — DICOM RDSR may be referenced" },
+            { "property": "Dose DICOM tag", "value": "(0040,A124) CT Dose Series; or ImagingStudy.extension for dose SR reference" },
+            { "property": "Prefetch query", "value": "ImagingStudy?patient={{context.patientId}}&started=ge{{today-28d}}&modality=CT,XA,NM&_sort=-started&_count=20" },
+            { "property": "Unsafe threshold", "value": "> 100 mSv in 4 weeks — applied by CDS service" },
+            { "property": "Notes", "value": "⚠️ This is the most unreliable field in the entire dashboard. Radiation dose data is not consistently structured in Epic's FHIR R4 implementation. Dose values live in DICOM Radiation Dose Structured Reports (RDSR) which are separate from the ImagingStudy resource and not reliably surfaced via FHIR. Most Epic sites do not expose cumulative dose via FHIR. Realistic options: (1) use a dedicated dose tracking system (Radimetrics, DoseWatch) with its own API, (2) use Epic's Clarity/Caboodle tables for retrospective dose data, (3) estimate dose from procedure type (CT chest ≈ 7 mSv, CT abdomen ≈ 8 mSv) and count imaging studies as a proxy. Flag as \"data unavailable\" if dose cannot be retrieved." }
+          ]
+        }
+      ]
+    }
+  ]
+}

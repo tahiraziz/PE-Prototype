@@ -1,0 +1,150 @@
+/* ===========================================================================
+   Dashboard Grid - HUD "Bento Box" Layout
+   Dark mode, high contrast, minimal chrome
+   =========================================================================== */
+
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: #0a0a0f;
+  min-height: calc(100vh - 120px);
+}
+
+/* Grid Header */
+.grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.source-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.source-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.source-epic .source-dot { background: #4ade80; }
+.source-demo .source-dot { background: #fbbf24; }
+.source-none .source-dot { background: #6b7280; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.source-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.source-epic .source-label { color: #4ade80; }
+.source-demo .source-label { color: #fbbf24; }
+
+.patient-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Bento Grid Layout */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: auto auto;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Zone Containers */
+.zone {
+  display: flex;
+}
+
+/* Zone A: Top Left (40%) */
+.zone-a {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.zone-a > * {
+  flex: 1;
+}
+
+/* Zone B: Top Right (60%) */
+.zone-b {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.zone-b > * {
+  flex: 1;
+}
+
+/* Zone C: Bottom Full Width */
+.zone-c {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.zone-c > * {
+  flex: 1;
+}
+
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  
+  .zone-a {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  
+  .zone-b {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  .zone-c {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+/* Responsive: Adjust proportions on tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: 45% 55%;
+  }
+}
+
+/* Large screens: More balanced */
+@media (min-width: 1400px) {
+  .bento-grid {
+    grid-template-columns: 35% 65%;
+    gap: 16px;
+  }
+  
+  .dashboard-grid {
+    padding: 16px;
+    gap: 16px;
+  }
+}

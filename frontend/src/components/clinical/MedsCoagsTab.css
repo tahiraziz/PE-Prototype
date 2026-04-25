@@ -1,0 +1,405 @@
+/* ===========================================================================
+   Medication & Anticoagulation Tab Styles
+   =========================================================================== */
+
+.meds-coags-tab {
+  padding: 12px;
+}
+
+.meds-coags-tab.loading {
+  min-height: 200px;
+}
+
+/* Adherence Status Badge */
+.adherence-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+}
+
+.adherence-badge.status-protected {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-color: #86efac;
+  color: #166534;
+}
+
+.adherence-badge.status-caution {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fcd34d;
+  color: #a16207;
+}
+
+.adherence-badge.status-gap {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.adherence-badge.status-none {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #6b7280;
+}
+
+.badge-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-icon {
+  font-size: 18px;
+}
+
+.badge-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.badge-detail {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-left: 26px;
+}
+
+/* Sections */
+.meds-section {
+  margin-bottom: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+}
+
+.section-icon {
+  font-size: 14px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.section-count {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.toggle-btn {
+  margin-left: auto;
+  font-size: 10px;
+  color: #6366f1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.toggle-btn:hover {
+  background: #eef2ff;
+}
+
+.no-meds {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+/* Meds Grid */
+.meds-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meds-grid.compact .med-card {
+  padding: 8px 10px;
+}
+
+/* Medication Card */
+.med-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f9fafb;
+  border-left: 4px solid #d1d5db;
+}
+
+.med-card.status-protected {
+  background: #f0fdf4;
+  border-left-color: #22c55e;
+}
+
+.med-card.status-caution {
+  background: #fffbeb;
+  border-left-color: #f59e0b;
+}
+
+.med-card.status-gap {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+
+/* Type-specific colors */
+.med-card.type-doac {
+  border-left-color: #3b82f6;
+}
+
+.med-card.type-warfarin {
+  border-left-color: #8b5cf6;
+}
+
+.med-card.type-heparin-lmwh {
+  border-left-color: #ec4899;
+}
+
+.med-card.type-antiplatelet {
+  border-left-color: #f97316;
+}
+
+.med-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.med-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.med-type-badge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.med-type-badge.type-doac {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.med-type-badge.type-warfarin {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.med-type-badge.type-heparin-lmwh {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.med-type-badge.type-antiplatelet {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.med-type-badge.type-other {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.med-dosage {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.med-adherence {
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.adherence-good {
+  color: #16a34a;
+}
+
+.adherence-gap {
+  color: #dc2626;
+}
+
+.adherence-sub {
+  color: #d97706;
+}
+
+.med-start {
+  font-size: 9px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+/* INR Section */
+.inr-section {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.inr-header {
+  margin-bottom: 10px;
+}
+
+.inr-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.inr-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.inr-latest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  min-width: 80px;
+}
+
+.inr-latest.status-sub {
+  background: #fef3c7;
+  border-color: #fcd34d;
+}
+
+.inr-latest.status-therapeutic {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.inr-latest.status-supra {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.inr-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text, #111827);
+  line-height: 1;
+}
+
+.inr-label {
+  font-size: 10px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.inr-date {
+  font-size: 9px;
+  color: #9ca3af;
+}
+
+.inr-status {
+  font-size: 9px;
+  font-weight: 600;
+  margin-top: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.inr-status.status-sub {
+  background: #fef3c7;
+  color: #a16207;
+}
+
+.inr-status.status-therapeutic {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.inr-status.status-supra {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.inr-trend-mini {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inr-chart {
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+.inr-range-label {
+  font-size: 9px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.inr-empty {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Other Meds Section */
+.other-meds {
+  border-top: 1px dashed var(--color-border, #e5e7eb);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+/* Skeleton Loading */
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+.skeleton-badge {
+  height: 60px;
+}
+
+.skeleton-list {
+  height: 120px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
